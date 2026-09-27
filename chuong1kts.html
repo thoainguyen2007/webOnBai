@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập & Luyện Thi Kỹ Thuật Số Chuẩn Đề Cương</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MathJax để hiển thị công thức chuẩn đẹp -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body { background-color: #f1f4f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .card { border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); margin-bottom: 25px; border: none; }
+        .card-header { font-weight: bold; background-color: #0d6efd; color: white; border-radius: 12px 12px 0 0 !important; }
+        .code-box { background: #eef2f7; border-left: 4px solid #0d6efd; padding: 12px 16px; border-radius: 4px; font-size: 0.95rem; }
+        .badge-bits { font-family: monospace; font-size: 1.1rem; letter-spacing: 2px; }
+        .nav-pills .nav-link { font-weight: bold; font-size: 1.1rem; padding: 10px 24px; border-radius: 30px; }
+        .quiz-card { background: white; border-left: 6px solid #198754; }
+    </style>
+</head>
+<body class="py-4">
+
+<div class="container">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-primary">Sổ Tay & Luyện Tập Hệ Thống Số</h1>
+        <p class="text-muted">Bám sát đề cương: Tìm cơ số $r$ • Phép toán nhị phân • BCD, Quá 3, Gray, LED 7 đoạn • Bù 1, Bù 2</p>
+        
+        <ul class="nav nav-pills justify-content-center mt-3" id="mainTab" role="tablist">
+            <li class="nav-item me-2">
+                <button class="nav-link active" id="lookup-tab" data-bs-toggle="pill" data-bs-target="#lookup-pane">🛠️ 1. Tra Cứu & Đối Chiếu Bài Tập</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="quiz-tab" data-bs-toggle="pill" data-bs-target="#quiz-pane">🎯 2. Luyện Tập Trắc Nghiệm Tự Luận (Tự Tạo Đề)</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="mainTabContent">
+        <!-- ============================================== -->
+        <!-- TAB 1: TRA CỨU & ĐỐI CHIẾU NHANH               -->
+        <!-- ============================================== -->
+        <div class="tab-pane fade show active" id="lookup-pane">
+            
+            <!-- 1. Hệ cơ số -->
+            <div class="card">
+                <div class="card-header">1. Chuyển Đổi Các Hệ Cơ Số (Cả phần nguyên và phần lẻ)</div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Thập phân (DEC / 10)</label>
+                            <input type="text" id="decInp" class="form-control" placeholder="vd: 25.625">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Nhị phân (BIN / 2)</label>
+                            <input type="text" id="binInp" class="form-control" placeholder="vd: 11001.101">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Bát phân (OCT / 8)</label>
+                            <input type="text" id="octInp" class="form-control" placeholder="vd: 31.5">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Thập lục phân (HEX / 16)</label>
+                            <input type="text" id="hexInp" class="form-control" placeholder="vd: 19.A">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Bảng mã nhị phân -->
+            <div class="card">
+                <div class="card-header">2. Bảng Tra Cứu Toàn Bộ Mã: BCD 8421, BCD 2421, Quá 3, Gray, LED 7 Đoạn</div>
+                <div class="card-body">
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-5">
+                            <label class="form-label fw-semibold">Nhập một chữ số thập phân (0 đến 9):</label>
+                            <input type="number" id="singleDigitInp" class="form-control" min="0" max="9" value="5">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Chữ số (Dec)</th>
+                                    <th>BCD 8421</th>
+                                    <th>BCD 2421</th>
+                                    <th>BCD Quá 3 (Excess-3)</th>
+                                    <th>Mã Gray (4-bit)</th>
+                                    <th>LED 7 Đoạn (Anode chung: abcdefg)</th>
+                                    <th>LED 7 Đoạn (Cathode chung: abcdefg)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="mDec" class="fw-bold fs-5 text-primary">5</td>
+                                    <td id="mBcd8421" class="badge-bits">-</td>
+                                    <td id="mBcd2421" class="badge-bits">-</td>
+                                    <td id="mEx3" class="badge-bits">-</td>
+                                    <td id="mGray" class="badge-bits">-</td>
+                                    <td><span id="mAnode" class="badge bg-danger badge-bits">-</span> <small class="d-block text-muted">0 là Sáng, 1 là Tắt</small></td>
+                                    <td><span id="mCathode" class="badge bg-success badge-bits">-</span> <small class="d-block text-muted">1 là Sáng, 0 là Tắt</small></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Số nguyên có dấu -->
+            <div class="card">
+                <div class="card-header">3. Biểu Diễn Số Nhị Phân Có Dấu & Tính Giá Trị</div>
+                <div class="card-body">
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Nhập giá trị thập phân (âm hoặc dương):</label>
+                            <input type="number" id="signedInt" class="form-control" value="-19">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Số lượng bit ($n$-bit):</label>
+                            <select id="bitLength" class="form-select">
+                                <option value="8" selected>8 bit (Khoảng: -128 đến +127)</option>
+                                <option value="16">16 bit (Khoảng: -32768 đến +32767)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-bordered text-center align-middle">
+                        <thead class="table-light">
+                            <tr><th>Quy cách</th><th>Biểu diễn nhị phân</th><th>Công thức giải mã ngược</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Dấu và Độ lớn</td><td><span id="smRes" class="badge-bits text-primary">-</span></td><td>$(-1)^{\text{bit dấu}} \times \text{Độ lớn}$</td></tr>
+                            <tr><td>Số có dấu Bù 1</td><td><span id="c1Res" class="badge-bits text-warning text-dark">-</span></td><td>Đảo bit nếu là số âm ($- (2^{n-1}-1)$ đến $2^{n-1}-1$)</td></tr>
+                            <tr><td>Số có dấu Bù 2</td><td><span id="c2Res" class="badge-bits text-danger">-</span></td><td>Trọng số bit dấu MSB là âm: $-b_{n-1}2^{n-1} + \sum b_i 2^i$</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. Cộng trừ số Bù 2 -->
+            <div class="card">
+                <div class="card-header">4. Thực Hiện Phép Toán Cộng và Trừ Trên Số Bù 2 (8-bit)</div>
+                <div class="card-body">
+                    <div class="code-box mb-3">
+                        Phép trừ thực chất là cộng với số đối: $A - B = A + (-B)_{\text{bù 2}}$. Bỏ qua bit nhớ (carry-out) vượt ngoài 8 bit.
+                    </div>
+                    <div class="row g-3 align-items-end mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Toán hạng A (Dec):</label>
+                            <input type="number" id="opA" class="form-control" value="35">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Phép toán:</label>
+                            <select id="opType" class="form-select">
+                                <option value="+">+</option>
+                                <option value="-">-</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Toán hạng B (Dec):</label>
+                            <input type="number" id="opB" class="form-control" value="-12">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary w-100" onclick="calcC2Arithmetic()">Thực hiện phép tính Bù 2</button>
+                        </div>
+                    </div>
+                    <div class="border p-3 rounded bg-white" id="arithResultBox">
+                        Nhấn nút để xem các bước cộng trừ nhị phân bù 2 chi tiết.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB 2: LUYỆN TẬP TỰ TẠO ĐỀ (THEO ĐỀ CƯƠNG)     -->
+        <!-- ============================================== -->
+        <div class="tab-pane fade" id="quiz-pane">
+            <div class="row mb-4">
+                <div class="col-md-8 mx-auto text-center">
+                    <label class="form-label fw-bold fs-5">Chọn dạng bài tập trong đề cương:</label>
+                    <select id="quizTopic" class="form-select form-select-lg mb-3" onchange="generateNewQuestion()">
+                        <option value="find_r">1. Tìm cơ số r</option>
+                        <option value="radix">2. Chuyển đổi giữa các hệ thống số</option>
+                        <option value="bin_arith">3. Các phép toán (+, -, *, /) nhị phân không dấu</option>
+                        <option value="codes">4. Các loại mã (BCD 8421, 2421, Quá 3, Gray, LED 7 đoạn)</option>
+                        <option value="signed_rep">5. Biểu diễn số nhị phân có dấu (Dấu-Lượng, Bù 1, Bù 2)</option>
+                        <option value="signed_val">6. Tính giá trị của số nhị phân có dấu</option>
+                        <option value="c2_arith">7. Phép toán cộng, trừ số nhị phân có dấu Bù 2</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-10 mx-auto">
+                <div class="card quiz-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-primary fs-6" id="quizCategoryBadge">Chủ đề</span>
+                        <span class="text-muted fw-bold" id="scoreTracker">Điểm: 0 đúng / 0 đã làm</span>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="fw-bold" id="questionText">Nội dung câu hỏi đang tải...</h4>
+                        <div id="questionSub" class="text-muted mt-2"></div>
+                    </div>
+
+                    <div class="input-group input-group-lg mb-3">
+                        <input type="text" id="userAnswer" class="form-control" placeholder="Nhập đáp án của bạn..." onkeypress="if(event.key==='Enter') checkAnswer()">
+                        <button class="btn btn-success px-4" onclick="checkAnswer()">Kiểm Tra</button>
+                    </div>
+
+                    <div id="quizFeedback" class="alert d-none mb-3"></div>
+
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary px-4" onclick="generateNewQuestion()">Tạo câu hỏi mới khác &rarr;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // --- DỮ LIỆU CỐ ĐỊNH CHO MÃ VÀ LED 7 ĐOẠN (0-9) ---
+    const CODE_TABLE = {
+        0: { bcd8421: "0000", bcd2421: "0000", ex3: "0011", gray: "0000", ca: "0000001", cc: "1111110" },
+        1: { bcd8421: "0001", bcd2421: "0001", ex3: "0100", gray: "0001", ca: "1001111", cc: "0110000" },
+        2: { bcd8421: "0010", bcd2421: "0010", ex3: "0101", gray: "0011", ca: "0010010", cc: "1101101" },
+        3: { bcd8421: "0011", bcd2421: "0011", ex3: "0110", gray: "0010", ca: "0000110", cc: "1111001" },
+        4: { bcd8421: "0100", bcd2421: "0100", ex3: "0111", gray: "0110", ca: "1001100", cc: "0110011" },
+        5: { bcd8421: "0101", bcd2421: "1011", ex3: "1000", gray: "0111", ca: "0100100", cc: "1011010" },
+        6: { bcd8421: "0110", bcd2421: "1100", ex3: "1001", gray: "0101", ca: "0100000", cc: "1011111" },
+        7: { bcd8421: "0111", bcd2421: "1101", ex3: "1010", gray: "0100", ca: "0001111", cc: "1110000" },
+        8: { bcd8421: "1000", bcd2421: "1110", ex3: "1011", gray: "1100", ca: "0000000", cc: "1111111" },
+        9: { bcd8421: "1001", bcd2421: "1111", ex3: "1100", gray: "1101", ca: "0000100", cc: "1111011" }
+    };
+
+    function updateSingleDigitCodes() {
+        let d = parseInt(document.getElementById('singleDigitInp').value);
+        if (isNaN(d) || d < 0 || d > 9) return;
+        document.getElementById('mDec').innerText = d;
+        document.getElementById('mBcd8421').innerText = CODE_TABLE[d].bcd8421;
+        document.getElementById('mBcd2421').innerText = CODE_TABLE[d].bcd2421;
+        document.getElementById('mEx3').innerText = CODE_TABLE[d].ex3;
+        document.getElementById('mGray').innerText = CODE_TABLE[d].gray;
+        document.getElementById('mAnode').innerText = CODE_TABLE[d].ca;
+        document.getElementById('mCathode').innerText = CODE_TABLE[d].cc;
+    }
+    document.getElementById('singleDigitInp').oninput = updateSingleDigitCodes;
+    updateSingleDigitCodes();
+
+    // --- 1. CHUYỂN ĐỔI CƠ SỐ ---
+    function parseToDec(str, base) {
+        str = str.trim();
+        if (!str) return NaN;
+        let [intPart, fracPart] = str.split('.');
+        let intVal = parseInt(intPart, base);
+        if (isNaN(intVal)) return NaN;
+        let fracVal = 0;
+        if (fracPart) {
+            for (let i = 0; i < fracPart.length; i++) {
+                let digit = parseInt(fracPart[i], base);
+                if (isNaN(digit) || digit >= base) return NaN;
+                fracVal += digit / Math.pow(base, i + 1);
+            }
+        }
+        return intVal + fracVal;
+    }
+
+    function fromDecToBase(num, base, precision = 6) {
+        let intPart = Math.floor(num);
+        let fracPart = num - intPart;
+        let resInt = intPart.toString(base).toUpperCase();
+        if (fracPart === 0) return resInt;
+        let resFrac = '';
+        while (fracPart > 0 && resFrac.length < precision) {
+            fracPart *= base;
+            let digit = Math.floor(fracPart);
+            resFrac += digit.toString(base).toUpperCase();
+            fracPart -= digit;
+        }
+        return resInt + '.' + resFrac;
+    }
+
+    const decInp = document.getElementById('decInp');
+    const binInp = document.getElementById('binInp');
+    const octInp = document.getElementById('octInp');
+    const hexInp = document.getElementById('hexInp');
+
+    function syncRadix(val, fromBase) {
+        if (!val.trim()) { decInp.value = binInp.value = octInp.value = hexInp.value = ''; return; }
+        let dec = parseToDec(val, fromBase);
+        if (isNaN(dec)) return;
+        if (fromBase !== 10) decInp.value = dec.toString();
+        if (fromBase !== 2)  binInp.value = fromDecToBase(dec, 2);
+        if (fromBase !== 8)  octInp.value = fromDecToBase(dec, 8);
+        if (fromBase !== 16) hexInp.value = fromDecToBase(dec, 16);
+    }
+    decInp.oninput = () => syncRadix(decInp.value, 10);
+    binInp.oninput = () => syncRadix(binInp.value, 2);
+    octInp.oninput = () => syncRadix(octInp.value, 8);
+    hexInp.oninput = () => syncRadix(hexInp.value, 16);
+
+    // --- SỐ CÓ DẤU (BÙ 1, BÙ 2) ---
+    function toC2(val, bits) {
+        return ((1 << bits) + val).toString(2).padStart(bits, '0');
+    }
+    function calcSigned() {
+        const val = parseInt(document.getElementById('signedInt').value);
+        const bits = parseInt(document.getElementById('bitLength').value);
+        const minVal = -(1 << (bits - 1)), maxVal = (1 << (bits - 1)) - 1;
+        if (isNaN(val) || val < minVal || val > maxVal) {
+            document.getElementById('smRes').innerText = document.getElementById('c1Res').innerText = document.getElementById('c2Res').innerText = 'Ngoài giới hạn';
+            return;
+        }
+        const absBin = Math.abs(val).toString(2).padStart(bits - 1, '0');
+        document.getElementById('smRes').innerText = (val < 0 ? '1' : '0') + ' ' + absBin;
+        if (val >= 0) {
+            document.getElementById('c1Res').innerText = '0' + absBin;
+            document.getElementById('c2Res').innerText = '0' + absBin;
+        } else {
+            let posBin = '0' + absBin, c1 = '';
+            for (let ch of posBin) c1 += ch === '0' ? '1' : '0';
+            document.getElementById('c1Res').innerText = c1;
+            document.getElementById('c2Res').innerText = toC2(val, bits);
+        }
+    }
+    document.getElementById('signedInt').oninput = calcSigned;
+    document.getElementById('bitLength').onchange = calcSigned;
+    calcSigned();
+
+    // --- PHÉP TOÁN BÙ 2 ---
+    function calcC2Arithmetic() {
+        let a = parseInt(document.getElementById('opA').value);
+        let b = parseInt(document.getElementById('opB').value);
+        let op = document.getElementById('opType').value;
+        let bits = 8;
+        let targetB = (op === '-') ? -b : b;
+        let resDec = a + targetB;
+
+        let aBin = a >= 0 ? a.toString(2).padStart(8, '0') : toC2(a, 8);
+        let bEffBin = targetB >= 0 ? targetB.toString(2).padStart(8, '0') : toC2(targetB, 8);
+
+        let sumRaw = parseInt(aBin, 2) + parseInt(bEffBin, 2);
+        let sum8bit = (sumRaw & 0xFF).toString(2).padStart(8, '0');
+        let overflow = (resDec < -128 || resDec > 127);
+
+        let html = `<p class="mb-1"><strong>Bước 1:</strong> Biểu diễn dạng bù 2 (8-bit):</p>`;
+        html += `<ul><li>$A = ${a} \\implies ${aBin}_2$</li>`;
+        if (op === '-') {
+            html += `<li>$-B = -(${b}) = ${targetB} \\implies ${bEffBin}_2$</li>`;
+        } else {
+            html += `<li>$B = ${b} \\implies ${bEffBin}_2$</li>`;
+        }
+        html += `</ul>`;
+        html += `<p class="mb-1"><strong>Bước 2:</strong> Thực hiện phép cộng 2 chuỗi bit:</p>`;
+        html += `<pre class="bg-light p-2 rounded fw-bold">  ${aBin}\n+ ${bEffBin}\n= ${(sumRaw).toString(2).padStart(9, '0')} (Bỏ bit nhớ MSB nếu có &rarr; ${sum8bit})</pre>`;
+        html += `<p class="mb-0"><strong>Kết quả:</strong> ${sum8bit}_2 (Hệ 10: ${resDec}). ${overflow ? '<span class="text-danger fw-bold">Xảy ra hiện tượng TRÀN SỐ (Overflow)!</span>' : '<span class="text-success fw-bold">Không tràn số.</span>'}</p>`;
+        document.getElementById('arithResultBox').innerHTML = html;
+        if (window.MathJax) MathJax.typesetPromise();
+    }
+
+    // ==============================================
+    // LOGIC TAB 2: TỰ SINH CÂU HỎI THEO ĐỀ CƯƠNG
+    // ==============================================
+    let currentQ = {};
+    let stats = { correct: 0, total: 0 };
+    function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    function generateNewQuestion() {
+        const topic = document.getElementById('quizTopic').value;
+        const feed = document.getElementById('quizFeedback');
+        feed.classList.add('d-none');
+        document.getElementById('userAnswer').value = '';
+        document.getElementById('userAnswer').focus();
+        document.getElementById('questionSub').innerHTML = '';
+
+        // DẠNG 1: TÌM CƠ SỐ R
+        if (topic === 'find_r') {
+            document.getElementById('quizCategoryBadge').innerText = 'Tìm cơ số r';
+            let r = rand(4, 9);
+            // Dạng phương trình: (a1*r + a0) + (b1*r + b0) = (c1*r + c0)
+            let a1 = rand(1, r - 2), a0 = rand(1, r - 2);
+            let b1 = rand(1, r - 2), b0 = rand(1, r - 2);
+            let sumDec = (a1 * r + a0) + (b1 * r + b0);
+            let c1 = Math.floor(sumDec / r);
+            let c0 = sumDec % r;
+
+            currentQ = {
+                question: `Tìm cơ số $r$ thỏa mãn phương trình: $(${a1}${a0})_r + (${b1}${b0})_r = (${c1}${c0})_r$`,
+                answer: r.toString(),
+                explain: `Khai triển theo lũy thừa của $r$:<br>
+                          $(${a1}r + ${a0}) + (${b1}r + ${b0}) = ${c1}r + ${c0}$<br>
+                          $\\iff ${a1 + b1}r + ${a0 + b0} = ${c1}r + ${c0}$<br>
+                          Giải phương trình bậc nhất ta được $r = ${r}$.`
+            };
+        }
+        // DẠNG 2: CHUYỂN ĐỔI CƠ SỐ
+        else if (topic === 'radix') {
+            document.getElementById('quizCategoryBadge').innerText = 'Chuyển đổi hệ thống số';
+            let bases = [{b: 2, n: 'Nhị phân (Cơ số 2)'}, {b: 8, n: 'Bát phân (Cơ số 8)'}, {b: 10, n: 'Thập phân (Cơ số 10)'}, {b: 16, n: 'Thập lục phân (Hex)'}];
+            let i1 = rand(0, 3), i2;
+            do { i2 = rand(0, 3); } while(i1 === i2);
+            let val = rand(15, 80);
+            if (Math.random() > 0.6) val += [0.5, 0.25, 0.75, 0.125][rand(0, 3)];
+
+            let s1 = fromDecToBase(val, bases[i1].b);
+            let s2 = fromDecToBase(val, bases[i2].b);
+            currentQ = {
+                question: `Chuyển số: $(${s1})_{${bases[i1].b}}$ sang hệ **${bases[i2].n}**`,
+                answer: s2.toUpperCase(),
+                explain: `Giá trị ở hệ 10 tương đương là $${val}$. Chuyển sang cơ số ${bases[i2].b} ta được: $(${s2})_{${bases[i2].b}}$`
+            };
+        }
+        // DẠNG 3: PHÉP TOÁN NHỊ PHÂN KHÔNG DẤU
+        else if (topic === 'bin_arith') {
+            document.getElementById('quizCategoryBadge').innerText = 'Toán nhị phân không dấu';
+            let ops = ['+', '-', '*'];
+            let op = ops[rand(0, 2)];
+            let n1 = rand(6, 25), n2 = rand(2, 10);
+            if (op === '-' && n1 < n2) { let t = n1; n1 = n2; n2 = t; }
+
+            let b1 = n1.toString(2), b2 = n2.toString(2);
+            let res;
+            if (op === '+') res = (n1 + n2).toString(2);
+            if (op === '-') res = (n1 - n2).toString(2);
+            if (op === '*') res = (n1 * n2).toString(2);
+
+            currentQ = {
+                question: `Tính nhị phân: $(${b1})_2 ${op === '*' ? '\\times' : op} (${b2})_2 = ?$ (Nhập chuỗi nhị phân)`,
+                answer: res,
+                explain: `Chuyển về hệ 10 kiểm tra: $${n1} ${op} ${n2} = ${op === '+' ? n1+n2 : (op==='-'?n1-n2:n1*n2)}$. Đổi ngược sang nhị phân: $(${res})_2$`
+            };
+        }
+        // DẠNG 4: CÁC LOẠI MÃ (BCD, 2421, Quá 3, Gray, LED)
+        else if (topic === 'codes') {
+            document.getElementById('quizCategoryBadge').innerText = 'Các loại mã nhị phân & LED 7 đoạn';
+            let types = ['bcd8421', 'bcd2421', 'ex3', 'gray', 'anode', 'cathode'];
+            let t = types[rand(0, types.length - 1)];
+            let d = rand(0, 9);
+            let title = "", ans = "", exp = "";
+
+            if (t === 'bcd8421') {
+                title = `Mã **BCD 8421** của chữ số thập phân **${d}** là gì?`;
+                ans = CODE_TABLE[d].bcd8421;
+                exp = `Mã hóa nhị phân 4-bit của ${d} là ${ans}`;
+            } else if (t === 'bcd2421') {
+                title = `Mã **BCD 2421** của chữ số thập phân **${d}** là gì?`;
+                ans = CODE_TABLE[d].bcd2421;
+                exp = `Trọng số 2-4-2-1 tương ứng của ${d} là ${ans}`;
+            } else if (t === 'ex3') {
+                title = `Mã **BCD Quá 3 (Excess-3)** của chữ số thập phân **${d}** là gì?`;
+                ans = CODE_TABLE[d].ex3;
+                exp = `Lấy ${d} + 3 = ${d+3}, rồi đổi sang nhị phân 4-bit: ${ans}`;
+            } else if (t === 'gray') {
+                let bin = d.toString(2).padStart(4, '0');
+                title = `Mã **Gray 4-bit** tương ứng của số nhị phân **${bin}** là gì?`;
+                ans = CODE_TABLE[d].gray;
+                exp = `Bit đầu giữ nguyên, các bit tiếp theo là XOR kề nhau: ${ans}`;
+            } else if (t === 'anode') {
+                title = `Mã điều khiển **LED 7 đoạn Anode chung (abcdefg)** để hiển thị số **${d}** là gì? (0 là Sáng, 1 là Tắt)`;
+                ans = CODE_TABLE[d].ca;
+                exp = `Anode chung nối VCC nên mức 0 sẽ làm sáng đoạn LED. Chuỗi abcdefg tương ứng = ${ans}`;
+            } else if (t === 'cathode') {
+                title = `Mã điều khiển **LED 7 đoạn Cathode chung (abcdefg)** để hiển thị số **${d}** là gì? (1 là Sáng, 0 là Tắt)`;
+                ans = CODE_TABLE[d].cc;
+                exp = `Cathode chung nối GND nên mức 1 sẽ làm sáng đoạn LED. Chuỗi abcdefg tương ứng = ${ans}`;
+            }
+
+            currentQ = { question: title, answer: ans, explain: exp };
+        }
+        // DẠNG 5: BIỂU DIỄN SỐ CÓ DẤU
+        else if (topic === 'signed_rep') {
+            document.getElementById('quizCategoryBadge').innerText = 'Biểu diễn số có dấu';
+            let val = rand(-50, -3);
+            let subType = ['sm', 'c1', 'c2'][rand(0, 2)];
+            let absBin = Math.abs(val).toString(2).padStart(7, '0');
+            let ans = "", typeName = "";
+
+            if (subType === 'sm') {
+                typeName = "Dấu - Lượng (Sign-Magnitude)";
+                ans = '1' + absBin;
+            } else if (subType === 'c1') {
+                typeName = "Bù 1 (1's Complement)";
+                let pos = '0' + absBin;
+                for (let ch of pos) ans += ch === '0' ? '1' : '0';
+            } else {
+                typeName = "Bù 2 (2's Complement)";
+                ans = toC2(val, 8);
+            }
+
+            currentQ = {
+                question: `Biểu diễn số nguyên **${val}** dưới dạng **8-bit ${typeName}**:`,
+                answer: ans,
+                explain: `Số dương tương ứng: 0${absBin}. Áp dụng định nghĩa số ${typeName} ta nhận được: ${ans}`
+            };
+        }
+        // DẠNG 6: TÍNH GIÁ TRỊ SỐ CÓ DẤU
+        else if (topic === 'signed_val') {
+            document.getElementById('quizCategoryBadge').innerText = 'Tính giá trị số có dấu';
+            let val = rand(-64, 63);
+            let c2 = val >= 0 ? val.toString(2).padStart(8, '0') : toC2(val, 8);
+
+            currentQ = {
+                question: `Cho chuỗi nhị phân 8-bit có dấu Bù 2: <strong class="text-danger fs-3">${c2}</strong>. Giá trị thập phân của nó là bao nhiêu?`,
+                answer: val.toString(),
+                explain: `Bit dấu MSB = ${c2[0]}. ${c2[0] === '0' ? 'Số dương nên giá trị = ' + val : 'Số âm: lấy bù 2 đảo lại được trị tuyệt đối, kết quả = ' + val}`
+            };
+        }
+        // DẠNG 7: PHÉP TOÁN CỘNG TRỪ BÙ 2
+        else if (topic === 'c2_arith') {
+            document.getElementById('quizCategoryBadge').innerText = 'Phép toán trên số Bù 2';
+            let v1 = rand(-30, 30);
+            let v2 = rand(-30, 30);
+            let sum = v1 + v2;
+            let ans = sum >= 0 ? sum.toString(2).padStart(8, '0') : toC2(sum, 8);
+
+            currentQ = {
+                question: `Thực hiện phép cộng hai số bù 2 8-bit tương ứng với phép tính thập phân: $(${v1}) + (${v2})$. Hãy cho biết kết quả nhị phân 8-bit thu được:`,
+                answer: ans,
+                explain: `Tổng thập phân = ${v1 + v2}. Biểu diễn bù 2 8-bit của ${sum} là: ${ans}`
+            };
+        }
+
+        document.getElementById('questionText').innerHTML = currentQ.question;
+        if (window.MathJax) MathJax.typesetPromise();
+    }
+
+    function cleanStr(s) {
+        return s.replace(/\s+/g, '').toUpperCase();
+    }
+
+    function checkAnswer() {
+        const user = cleanStr(document.getElementById('userAnswer').value);
+        const correct = cleanStr(currentQ.answer);
+        const feed = document.getElementById('quizFeedback');
+
+        if (!user) return;
+        stats.total++;
+        feed.classList.remove('d-none', 'alert-success', 'alert-danger');
+
+        if (user === correct) {
+            stats.correct++;
+            feed.classList.add('alert-success');
+            feed.innerHTML = `🎉 <strong>Chính xác!</strong> Rất tốt.<br><div class="mt-2 text-dark">${currentQ.explain}</div>`;
+        } else {
+            feed.classList.add('alert-danger');
+            feed.innerHTML = `❌ <strong>Chưa chính xác!</strong><br>Đáp án đúng là: <strong class="fs-5">${currentQ.answer}</strong><br><div class="mt-2 text-dark">${currentQ.explain}</div>`;
+        }
+
+        document.getElementById('scoreTracker').innerText = `Điểm: ${stats.correct} đúng / ${stats.total} đã làm`;
+        if (window.MathJax) MathJax.typesetPromise([feed]);
+    }
+
+    window.addEventListener('load', () => {
+        generateNewQuestion();
+    });
+</script>
+</body>
+</html>
